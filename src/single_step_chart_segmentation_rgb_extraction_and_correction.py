@@ -204,7 +204,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
                 
 
     # Create a DataFrame for corrected values and save to an Excel file in output folder
-    corrected_output_file = os.path.join(output_folder, "Corrected_rgb_values.xlsx")
+    corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx")
     corrected_df = pd.DataFrame(corrected_values)
     corrected_df.to_excel(corrected_output_file, index=False)
     print(f"Corrected RGB values saved to {corrected_output_file}")
