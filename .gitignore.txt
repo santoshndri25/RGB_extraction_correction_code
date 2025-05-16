@@ -1,0 +1,40 @@
+# Python bytecode
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution/build folders
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Hidden files
+.*/  
+
+# Excel and output files (optional, if you don't want to track output data)
+data/output/*.xlsx  
+
+# Temporary files
+*.tmp
+*.bak
