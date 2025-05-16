@@ -33,21 +33,6 @@ How It Works
 	b)Exports the measured and corrected RGB values to an Excel file.
 
 Prerequisites
-	•Python 3.11.7 (Anaconda, Inc.)
-	•Required Libraries:
-	A. Standard Libraries (No installation required):
-		1. os
-		2. time
-	B. Third-party Libraries (Install using pip)
-		1. OpenCV
-		2. Numpy 
-		3. Pandas 
-		4. Scipy
-		5. Scikit-learn 
-		6. Matplotlib 
-		7. Scikit-image 
-	
-Prerequisites
 - Python 3.11.7 (Anaconda, Inc.)
 - Required Libraries:
   1. Standard Libraries (No installation required):
