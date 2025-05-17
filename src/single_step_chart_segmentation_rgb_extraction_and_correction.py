@@ -194,7 +194,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         print(f"{param}: {eq}")
 
     # Specify absolute path for the output folder
-    output_folder = "data/output/"
+    output_folder = "data/output"
     os.makedirs(output_folder, exist_ok=True)
 
     # Create a DataFrame for corrected values
