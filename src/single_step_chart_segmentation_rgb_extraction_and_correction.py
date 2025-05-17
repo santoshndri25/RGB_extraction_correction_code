@@ -213,14 +213,14 @@ def model_and_correct_data(measured_file_path, reference_file_path):
     print("\nCorrected RGB values to be saved:\n", corrected_df.head())
     
     # Save corrected values to Excel file
-    corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx")
+    corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx.xlsx")
     corrected_df.to_excel(corrected_output_file, index=False, engine='openpyxl')
     print(f"Corrected RGB values saved to {corrected_output_file}")
 
 # Execution
 image_path = "data/input/test_image.jpg"
-output_measured_file = "data/output/test_measured_rgb_values.xlsx"
-reference_file_path = "data/input/test_reference_rgb_values.xlsx"
+output_measured_file = "data/output/test_measured_rgb_values.xlsx.xlsx"
+reference_file_path = "data/input/test_reference_rgb_values.xlsx.xlsx"
 
 # Run the functions
 extract_rgb_and_save(image_path, output_measured_file)
