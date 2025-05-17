@@ -197,6 +197,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
     print("\nGenerated Best-Fit Equations:")
     for param, eq in equations.items():
         print(f"{param}: {eq}")
+
         
     # Create output folder if it doesn't exist
         output_folder = os.path.join("data", "output")
@@ -220,3 +221,4 @@ end_time = time.time()
 # Calculate and display the elapsed time
 elapsed_time = end_time - start_time
 print(f"Total execution time: {elapsed_time:.2f} seconds")
+
