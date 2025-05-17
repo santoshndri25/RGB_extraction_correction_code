@@ -1,4 +1,3 @@
-
 import os
 import cv2
 import numpy as np
@@ -70,28 +69,19 @@ def extract_rgb_and_save(image_path, output_file):
                 patches.append(patch)
 
         rgb_values = np.array(rgb_values).astype(int)
-       
-        
-# Directly save the measured RGB values here
-measured_values = {
-    'Measured R': rgb_values[:, 0],
-    'Measured G': rgb_values[:, 1],
-    'Measured B': rgb_values[:, 2],
-}
+        # Normalize RGB values for conversion to Lab
+        normalized_rgb = np.clip(rgb_values / 255.0, 0, 1)  # Normalize to [0, 1]
+        lab_values = rgb2lab(normalized_rgb)
+        # Create a DataFrame to store RGB and Lab values
+        df = pd.DataFrame({
+            'Measured R': rgb_values[:, 0],
+            'Measured G': rgb_values[:, 1],
+            'Measured B': rgb_values[:, 2],
+        })
+        df.to_excel(output_file, index=False)
+        print(f"RGB values extracted and saved to {output_file}")
 
-# Create DataFrame and Save Measured Values
-measured_df = pd.DataFrame(measured_values)
-output_folder = "data/output/"
-os.makedirs(output_folder, exist_ok=True)
-output_measured_file = os.path.join(output_folder, "test_measured_rgb_values.xlsx")
-
-if measured_df.empty:
-    print("\nError: Measured DataFrame is empty. No values to save.")
-else:
-    measured_df.to_excel(output_measured_file, index=False, engine='openpyxl')
-    print(f"\nMeasured RGB values saved to {output_measured_file}")
-            
-       # Display the cropped image and segmented patches
+        # Display the cropped image and segmented patches
         display_cropped_and_patches(cropped_image, patches, rows, cols)
     else:
         print("No contours found in the image.")
@@ -204,7 +194,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         print(f"{param}: {eq}")
 
     # Specify absolute path for the output folder
-    output_folder = "data/output/test_corrected_rgb_values.xlsx"
+    output_folder = "data/output/"
     os.makedirs(output_folder, exist_ok=True)
 
     # Create a DataFrame for corrected values
