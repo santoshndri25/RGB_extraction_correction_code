@@ -78,7 +78,7 @@ def extract_rgb_and_save(image_path, output_file):
         }
         
         measured_df = pd.DataFrame(measured_values)
-        output_folder = "data/output/"
+        output_folder = "data/output/test_measured_rgb_values.xlsx"
         os.makedirs(output_folder, exist_ok=True)
         output_measured_file = os.path.join(output_folder, "test_measured_rgb_values.xlsx")
 
@@ -87,9 +87,7 @@ def extract_rgb_and_save(image_path, output_file):
         else:
             measured_df.to_excel(output_measured_file, index=False, engine='openpyxl')
             print(f"\nMeasured RGB values saved to {output_measured_file}")
-       
-
-        # Display the cropped image and segmented patches
+       # Display the cropped image and segmented patches
         display_cropped_and_patches(cropped_image, patches, rows, cols)
     else:
         print("No contours found in the image.")
