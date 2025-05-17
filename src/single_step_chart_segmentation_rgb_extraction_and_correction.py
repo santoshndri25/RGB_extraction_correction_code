@@ -132,9 +132,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         def Linear(x, m, c): return m * x + c
         def Quadratic(x, a, b, c): return a * x**2 + b * x + c
         def Cubic(x, a, b, c, d): return a * x**3 + b * x**2 + c * x + d
-
         function_generators = [Linear, Quadratic, Cubic]
-
         best_model = None
         best_r2 = float('-inf')
         best_rmse = float('inf')
@@ -180,9 +178,6 @@ def model_and_correct_data(measured_file_path, reference_file_path):
 
             equations[param] = equation
             print(f"\nBest model for {param}: {equation}")
-
-        else:
-            print(f"\nNo valid model found for {param}")
         
         # Plot the fit
         plt.scatter(x_data, y_data, label='Original Data')
@@ -197,40 +192,35 @@ def model_and_correct_data(measured_file_path, reference_file_path):
     print("\nGenerated Best-Fit Equations:")
     for param, eq in equations.items():
         print(f"{param}: {eq}")
-  
-    # Create output folder if it doesn't exist
-    output_folder = os.path.join("data", "output")
+
+    # Specify absolute path for the output folder
+    output_folder = "data/output/"
     os.makedirs(output_folder, exist_ok=True)
-    
-    # Print corrected values dict before saving
-    print("\nCorrected Values Dictionary:\n", corrected_values)
-    
+
     # Create a DataFrame for corrected values
     corrected_df = pd.DataFrame(corrected_values)
-    
-    # Display the DataFrame before saving
     print("\nCorrected Values DataFrame:\n", corrected_df)
-    print("\nCorrected RGB values to be saved:\n", corrected_df.head())
-    
+
     # Save corrected values to Excel file
-    corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx.xlsx")
-    corrected_df.to_excel(corrected_output_file, index=False, engine='openpyxl')
-    print(f"Corrected RGB values saved to {corrected_output_file}")
-
+    corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx")
+    if corrected_df.empty:
+        print("\nError: Corrected DataFrame is empty. No values to save.")
+    else:
+        try:
+            corrected_df.to_excel(corrected_output_file, index=False, engine='openpyxl')
+            print(f"\nCorrected RGB values saved to {corrected_output_file}")
+        except Exception as e:
+            print("\nError while saving corrected RGB values:", e)
 # Execution
-image_path = "data/input/test_image.jpg"
-output_measured_file = "data/output/test_measured_rgb_values.xlsx.xlsx"
-reference_file_path = "data/input/test_reference_rgb_values.xlsx.xlsx"
-
+image_path = r"data/input/test_image.jpg"
+output_measured_file = "data/output/test_measured_rgb_values.xlsx"
+reference_file_path = "data/input/test_reference_rgb_values.xlsx."
 # Run the functions
 extract_rgb_and_save(image_path, output_measured_file)
-
 print("\nDebug: Measured RGB Values (from file):")
 measured_df = pd.read_excel(output_measured_file)
 print(measured_df.head())  # Display first few rows
-
 model_and_correct_data(output_measured_file, reference_file_path)
-
 end_time = time.time()
 elapsed_time = end_time - start_time
 print(f"Total execution time: {elapsed_time:.2f} seconds")
