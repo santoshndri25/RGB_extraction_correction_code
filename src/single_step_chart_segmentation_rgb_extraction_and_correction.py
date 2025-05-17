@@ -1,3 +1,4 @@
+
 import os
 import cv2
 import numpy as np
@@ -194,7 +195,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         print(f"{param}: {eq}")
 
     # Specify absolute path for the output folder
-    output_folder = "data/output"
+    output_folder = "data/output/test_corrected_rgb_values.xlsx"
     os.makedirs(output_folder, exist_ok=True)
 
     # Create a DataFrame for corrected values
@@ -214,7 +215,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
 # Execution
 image_path = "data/input/test_image.jpg"
 output_measured_file = "data/output/test_measured_rgb_values.xlsx"
-reference_file_path = "data/input/test_reference_rgb_values.xlsx."
+reference_file_path = "data/input/test_reference_rgb_values.xlsx"
 # Run the functions
 extract_rgb_and_save(image_path, output_measured_file)
 print("\nDebug: Measured RGB Values (from file):")
@@ -224,4 +225,3 @@ model_and_correct_data(output_measured_file, reference_file_path)
 end_time = time.time()
 elapsed_time = end_time - start_time
 print(f"Total execution time: {elapsed_time:.2f} seconds")
-
