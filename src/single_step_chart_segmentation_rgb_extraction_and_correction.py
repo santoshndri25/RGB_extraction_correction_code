@@ -212,7 +212,7 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         except Exception as e:
             print("\nError while saving corrected RGB values:", e)
 # Execution
-image_path = r"data/input/test_image.jpg"
+image_path = "data/input/test_image.jpg"
 output_measured_file = "data/output/test_measured_rgb_values.xlsx"
 reference_file_path = "data/input/test_reference_rgb_values.xlsx."
 # Run the functions
