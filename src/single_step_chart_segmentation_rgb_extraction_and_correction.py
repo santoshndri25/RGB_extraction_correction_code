@@ -199,20 +199,24 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         print(f"{param}: {eq}")
   
     # Create output folder if it doesn't exist
-        print("\nCorrected Values Dictionary:\n", corrected_values)
-        # Create a DataFrame for corrected values
-        corrected_df = pd.DataFrame(corrected_values)
-        # Display the DataFrame before saving
-        print("\nCorrected Values DataFrame:\n", corrected_df)
-
-        output_folder = os.path.join("data", "output")
-        os.makedirs(output_folder, exist_ok=True)
-                
-    # Create a DataFrame for corrected values and save to an Excel file in output folder
+    output_folder = os.path.join("data", "output")
+    os.makedirs(output_folder, exist_ok=True)
+    
+    # Print corrected values dict before saving
+    print("\nCorrected Values Dictionary:\n", corrected_values)
+    
+    # Create a DataFrame for corrected values
+    corrected_df = pd.DataFrame(corrected_values)
+    
+    # Display the DataFrame before saving
+    print("\nCorrected Values DataFrame:\n", corrected_df)
+    print("\nCorrected RGB values to be saved:\n", corrected_df.head())
+    
+    # Save corrected values to Excel file
     corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx")
     corrected_df.to_excel(corrected_output_file, index=False, engine='openpyxl')
     print(f"Corrected RGB values saved to {corrected_output_file}")
-    
+
 # Execution
 image_path = "data/input/test_image.jpg"
 output_measured_file = "data/output/test_measured_rgb_values.xlsx"
@@ -220,9 +224,14 @@ reference_file_path = "data/input/test_reference_rgb_values.xlsx"
 
 # Run the functions
 extract_rgb_and_save(image_path, output_measured_file)
+
+print("\nDebug: Measured RGB Values (from file):")
+measured_df = pd.read_excel(output_measured_file)
+print(measured_df.head())  # Display first few rows
+
 model_and_correct_data(output_measured_file, reference_file_path)
+
 end_time = time.time()
-# Calculate and display the elapsed time
 elapsed_time = end_time - start_time
 print(f"Total execution time: {elapsed_time:.2f} seconds")
 
