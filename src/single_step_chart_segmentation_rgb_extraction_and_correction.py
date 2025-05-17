@@ -219,7 +219,8 @@ reference_file_path = "data/input/test_reference_rgb_values.xlsx"
 extract_rgb_and_save(image_path, output_measured_file)
 print("\nDebug: Measured RGB Values (from file):")
 measured_df = pd.read_excel(output_measured_file)
-print(measured_df.head())  # Display first few rows
+for index, row in measured_df.iterrows():
+    print(f"Patch {index + 1}: R={row['Measured R']}, G={row['Measured G']}, B={row['Measured B']}")
 model_and_correct_data(output_measured_file, reference_file_path)
 end_time = time.time()
 elapsed_time = end_time - start_time
