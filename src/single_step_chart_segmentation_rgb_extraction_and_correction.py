@@ -1,4 +1,9 @@
-import os
+"""
+Created on Mon Dec 16 10:17:16 2024
+
+@author: santosh chopde
+"""
+
 import cv2
 import numpy as np
 import pandas as pd
@@ -77,6 +82,9 @@ def extract_rgb_and_save(image_path, output_file):
             'Measured R': rgb_values[:, 0],
             'Measured G': rgb_values[:, 1],
             'Measured B': rgb_values[:, 2],
+            'Measured L*': lab_values[:, 0],
+            'Measured a*': lab_values[:, 1],
+            'Measured b*': lab_values[:, 2]
         })
         df.to_excel(output_file, index=False)
         print(f"RGB values extracted and saved to {output_file}")
@@ -117,13 +125,8 @@ def model_and_correct_data(measured_file_path, reference_file_path):
     measured_df = pd.read_excel(measured_file_path)
     reference_df = pd.read_excel(reference_file_path)
 
-    parameters = ['R', 'G', 'B']
+    parameters = ['R','G','B']
     corrected_values = {f'Corrected {param}': [] for param in parameters}
-    equations = {}  # Store the equations
-
-    # Function to format coefficients in scientific notation
-    def format_coeff(value):
-        return f"{value:.4e}"  # Scientific notation with 4 decimals
 
     for param in parameters:
         x_data = measured_df[f'Measured {param}'].values
@@ -132,7 +135,9 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         def Linear(x, m, c): return m * x + c
         def Quadratic(x, a, b, c): return a * x**2 + b * x + c
         def Cubic(x, a, b, c, d): return a * x**3 + b * x**2 + c * x + d
+
         function_generators = [Linear, Quadratic, Cubic]
+
         best_model = None
         best_r2 = float('-inf')
         best_rmse = float('inf')
@@ -149,78 +154,57 @@ def model_and_correct_data(measured_file_path, reference_file_path):
                 rmse = np.sqrt(mean_squared_error(y_data, y_pred))
 
                 # Print results
-                print(f"{param} - {func.__name__} model: R²={r2:.4f}, RMSE={rmse:.4f}")
+                if func == Linear:
+                    print(f"{param} - Linear model: m={params[0]:.4f}, c={params[1]:.4f}")
+                elif func == Quadratic:
+                    print(f"{param} - Quadratic model: a={params[0]:.4f}, b={params[1]:.4f}, c={params[2]:.4f}")
+                elif func == Cubic:
+                    print(f"{param} - Cubic model: a={params[0]:.4f}, b={params[1]:.4f}, c={params[2]:.4f}, d={params[3]:.4f}")
+
+                print(f"R²={r2:.4f}, RMSE={rmse:.4f}")
 
                 # Check if this model is the best so far
-                if r2 > best_r2:
+                if r2 > best_r2 or (r2 == best_r2 and rmse < best_rmse):
                     best_model = func
                     best_r2 = r2
                     best_rmse = rmse
                     best_params = params
                     best_func_name = func.__name__
 
+                # Plot the fit
+                plt.scatter(x_data, y_data, label='Original Data')
+                plt.plot(x_data, y_pred, label=f"{func.__name__} Fit", color='red')
+                plt.xlabel('Measured')
+                plt.ylabel('Reference')
+                plt.legend()
+                plt.show()
+
             except RuntimeError as e:
                 print(f"Error fitting {func.__name__} for {param}: {e}")
 
-        # Generate the best-fit equation (Only for best model)
+        # Generate corrected values using the best model
         if best_model is not None:
-            corrected_values[f'Corrected {param}'] = np.round(best_model(x_data, *best_params)).astype(int)
+            corrected_values[f'Corrected {param}'] = np.round(best_model(x_data, *best_params), 2)
+            print(f"Best model for {param}: {best_func_name}")
+            print(f"Parameters: {best_params}")
+            print(f"R²={best_r2:.4f}, RMSE={best_rmse:.4f}")
 
-            if best_func_name == 'Linear':
-                equation = f"{param}_corrected = {format_coeff(best_params[0])} * {param} + {format_coeff(best_params[1])}"
-            elif best_func_name == 'Quadratic':
-                equation = (f"{param}_corrected = {format_coeff(best_params[0])} * {param}^2 + "
-                            f"{format_coeff(best_params[1])} * {param} + {format_coeff(best_params[2])}")
-            elif best_func_name == 'Cubic':
-                equation = (f"{param}_corrected = {format_coeff(best_params[0])} * {param}^3 + "
-                            f"{format_coeff(best_params[1])} * {param}^2 + {format_coeff(best_params[2])} * {param} + "
-                            f"{format_coeff(best_params[3])}")
-
-            equations[param] = equation
-            print(f"\nBest model for {param}: {equation}")
-        
-        # Plot the fit
-        plt.scatter(x_data, y_data, label='Original Data')
-        if best_model is not None:
-            plt.plot(x_data, best_model(x_data, *best_params), label=f"{best_func_name} Fit", color='red')
-        plt.xlabel('Measured')
-        plt.ylabel('Reference')
-        plt.legend()
-        plt.show()
-
-    # Display the generated equations
-    print("\nGenerated Best-Fit Equations:")
-    for param, eq in equations.items():
-        print(f"{param}: {eq}")
-
-    # Specify absolute path for the output folder
-    output_folder = "data/output/"
-    os.makedirs(output_folder, exist_ok=True)
-
-    # Create a DataFrame for corrected values
+    # Create a DataFrame for corrected values and save to an Excel file
     corrected_df = pd.DataFrame(corrected_values)
-    print("\nCorrected Values DataFrame:\n", corrected_df)
+    corrected_output_file = measured_file_path.replace("Measured_values", "Corrected_values")
+    corrected_df.to_excel(corrected_output_file, index=False)
+    print(f"Corrected RGB values saved to {corrected_output_file}")
 
-    # Save corrected values to Excel file
-    corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx")
-    if corrected_df.empty:
-        print("\nError: Corrected DataFrame is empty. No values to save.")
-    else:
-        try:
-            corrected_df.to_excel(corrected_output_file, index=False, engine='openpyxl')
-            print(f"\nCorrected RGB values saved to {corrected_output_file}")
-        except Exception as e:
-            print("\nError while saving corrected RGB values:", e)
+
 # Execution
 image_path = "data/input/test_image.jpg"
 output_measured_file = "data/output/test_measured_rgb_values.xlsx"
 reference_file_path = "data/input/test_reference_rgb_values.xlsx"
+
 # Run the functions
 extract_rgb_and_save(image_path, output_measured_file)
-print("\nDebug: Measured RGB Values (from file):")
-measured_df = pd.read_excel(output_measured_file)
-print(measured_df.head())  # Display first few rows
 model_and_correct_data(output_measured_file, reference_file_path)
 end_time = time.time()
+# Calculate and display the elapsed time
 elapsed_time = end_time - start_time
 print(f"Total execution time: {elapsed_time:.2f} seconds")
