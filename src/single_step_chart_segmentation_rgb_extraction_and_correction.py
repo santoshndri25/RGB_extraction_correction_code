@@ -197,15 +197,19 @@ def model_and_correct_data(measured_file_path, reference_file_path):
     print("\nGenerated Best-Fit Equations:")
     for param, eq in equations.items():
         print(f"{param}: {eq}")
-
-        
+  
     # Create output folder if it doesn't exist
+        print("\nCorrected Values Dictionary:\n", corrected_values)
+        # Create a DataFrame for corrected values
+        corrected_df = pd.DataFrame(corrected_values)
+        # Display the DataFrame before saving
+        print("\nCorrected Values DataFrame:\n", corrected_df)
+
         output_folder = os.path.join("data", "output")
         os.makedirs(output_folder, exist_ok=True)
                 
     # Create a DataFrame for corrected values and save to an Excel file in output folder
     corrected_output_file = os.path.join(output_folder, "test_corrected_rgb_values.xlsx")
-    corrected_df = pd.DataFrame(corrected_values)
     corrected_df.to_excel(corrected_output_file, index=False, engine='openpyxl')
     print(f"Corrected RGB values saved to {corrected_output_file}")
     
