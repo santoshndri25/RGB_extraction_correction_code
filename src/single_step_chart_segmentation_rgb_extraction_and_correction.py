@@ -71,27 +71,25 @@ def extract_rgb_and_save(image_path, output_file):
 
         rgb_values = np.array(rgb_values).astype(int)
        
-        measured_values = {
-            'Measured R': rgb_values[:, 0],
-            'Measured G': rgb_values[:, 1],
-            'Measured B': rgb_values[:, 2],
-        }
         
-        
-        output_folder = "data/output/test_measured_rgb_values.xlsx"
-        os.makedirs(output_folder, exist_ok=True)
-        measured_df = pd.DataFrame(measured_values)
-        print("\nMeasured Values DataFrame:\n", measured_df)
-        
-        output_measured_file = os.path.join(output_folder, "test_measured_rgb_values.xlsx")
-        if measured_df.empty:
-            print("\nError: Measured DataFrame is empty. No values to save.")
-        else:
-            try:
-            measured_df.to_excel(output_measured_file, index=False, engine='openpyxl')
-            print(f"\nMeasured RGB values saved to {output_measured_file}")
-            except Exception as e:
-            print("\nError while saving measured RGB values", e)
+# Directly save the measured RGB values here
+measured_values = {
+    'Measured R': rgb_values[:, 0],
+    'Measured G': rgb_values[:, 1],
+    'Measured B': rgb_values[:, 2],
+}
+
+# Create DataFrame and Save Measured Values
+measured_df = pd.DataFrame(measured_values)
+output_folder = "data/output/"
+os.makedirs(output_folder, exist_ok=True)
+output_measured_file = os.path.join(output_folder, "test_measured_rgb_values.xlsx")
+
+if measured_df.empty:
+    print("\nError: Measured DataFrame is empty. No values to save.")
+else:
+    measured_df.to_excel(output_measured_file, index=False, engine='openpyxl')
+    print(f"\nMeasured RGB values saved to {output_measured_file}")
             
        # Display the cropped image and segmented patches
         display_cropped_and_patches(cropped_image, patches, rows, cols)
