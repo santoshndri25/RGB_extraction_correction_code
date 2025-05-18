@@ -1,3 +1,5 @@
+![Icon](https://github.com/user-attachments/assets/70bc2ad3-2ba2-45f4-ae92-364fe9529dca)
+
 # Automated RGB Extraction and Correction for Camera Calibration
 
 ## Introduction
