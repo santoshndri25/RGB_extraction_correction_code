@@ -2,8 +2,7 @@
 
 
 # ⚡ SingleStep RGBCal
-
-# A single-step tool for RGB mapping and camera color calibration**
+A single-step tool for RGB mapping and camera color calibration
 
 ## Introduction
 This repository provides a Python-based implementation of a single-step RGB mapping method for color calibration of digital cameras. The code automates the process of extracting RGB values from an image of color checker chart (a device widely used in industries to solve the problem of color correction), segmenting color patches, and generating correction equations using regression models (Linear, Quadratic, and Cubic). Traditional color calibration methods using standard color checker chart requires multiple steps such as image capturing of individual shades, validation of extracted color data with the colorimeter, application of regression models or other suitable calibration models for identification of correction factor, generation of corrected color values based on coefficients of the models, and visualization of results.  
