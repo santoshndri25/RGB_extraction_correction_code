@@ -58,16 +58,15 @@ This code was developed as part of a research study to streamline the color cali
 
 ### 2. Run the Code
 - Specify the color checker chart image path, measured RGB values file (for saving and retrieving during further operations), and reference RGB values file in the script.
-- While executing code in the Bash, the generated images need to be closed to maintain code flow. These images allow the user to verify whether the code is correctly extracting the     
-  colors from the patches. Once confirmed, the user should close the image. In Python, these images are generated in a single step and displayed in the console. There is no need to 
-  close the images manually.
+- While executing code in the Bash, the generated images need to be closed to maintain code flow. These images allow the user to verify whether the code is correctly extracting the 
+colors from the patches. Once confirmed, the user should close the image. In Python, these images are generated in a single step and displayed in the console. There is no need to 
+close the images manually.
 - Execute the script to extract RGB values and perform camera calibration.  
 - The corrected RGB values will be saved as an Excel file.  
 
 ### 3. Model Selection
 - The script automatically evaluates Linear, Quadratic, and Cubic models for each RGB channel.
-- While executing the code in Bash, the generated graphs/ plots must be closed to maintain the code flow. These plots allow the user to verify whether the modeling is accurate. Once 
-  confirmed, the user should close the plots. 2. In Python, these plots are generated in a single step and displayed in the console. There is no need to close the plots manually 
+- While executing the code in Bash, the generated graphs/ plots must be closed to maintain the code flow. These plots allow the user to verify whether the modeling is accurate. Once confirmed, the user should close the plots. 2. In Python, these plots are generated in a single step and displayed in the console. There is no need to close the plots manually 
 - The model with the highest R² and lowest RMSE is selected for correction.  
 
 ## Example
