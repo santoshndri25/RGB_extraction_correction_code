@@ -5,6 +5,9 @@ This repository provides a Python-based implementation of a single-step RGB mapp
 The project introduces a novel single-step calibration method designed to enhance color measurement performance of cameras. Unlike conventional multi-step methods, this approach streamlines the calibration process into a single step, making it faster and more practical for real-world applications.
 The method generates and evaluates different calibration models (Linear, Quadratic, and Cubic) for RGB values, allowing flexibility in selecting the most suitable model based on accuracy. The method has been validated using different cameras with varying resolutions (2, 2, and 3 megapixels).
 
+## Current Code Version
+- Version: **v0.1.0** (Initial release for image processing and RGB correction)
+  
 ## Key Features
 1. Segmentation of color patches for precise color measurement.  
 2. Automated RGB extraction: Extracts RGB values from an image of a ColorChecker (target image).  
