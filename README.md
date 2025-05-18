@@ -18,6 +18,16 @@ The method generates and evaluates different calibration models (Linear, Quadrat
 This code was developed as part of a research study to streamline the color calibration process for camera systems, ensuring accurate color measurement while reducing complexity and execution time. The method suits diverse applications, including food imaging, industrial inspection, and scientific research.
 
 ## How It Works
+
+## Running the Code
+
+### Prerequisites
+- Ensure you have Python installed.
+- Navigate to the code directory in Bash:
+  $ cd ~/RGB_extraction_correction_code
+- Run the script:
+  python src/single_step_chart_segmentation_rgb_extraction_and_correction.py
+
 ### 1. Image Processing
 - Loads an image of a ColorChecker chart.  
 - Detects the largest contour, assuming it is the ColorChecker.  
