@@ -183,8 +183,8 @@ def model_and_correct_data(measured_file_path, reference_file_path):
         plt.scatter(x_data, y_data, label='Original Data')
         if best_model is not None:
             plt.plot(x_data, best_model(x_data, *best_params), label=f"{best_func_name} Fit", color='red')
-        plt.xlabel('Measured')
-        plt.ylabel('Reference')
+        plt.xlabel(f'Measured {param}')
+        plt.ylabel(f'Reference {param}')
         plt.legend()
         plt.show()
 
