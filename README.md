@@ -1,10 +1,8 @@
 # Automated RGB Extraction and Correction for Camera Calibration
 
 ## Introduction
-This repository provides a Python-based implementation of a single-step RGB mapping method for color calibration of digital cameras. The code automates the process of extracting RGB values from an image, segmenting color patches, and generating correction equations using regression models (Linear, Quadratic, and Cubic).
-
-This project introduces a novel single-step calibration method designed to enhance the color measurement performance of cameras. Unlike conventional multi-step methods, this approach streamlines the calibration process into a single step, making it faster and more practical for real-world applications.
-
+This repository provides a Python-based implementation of a single-step RGB mapping method for color calibration of digital cameras. The code automates the process of extracting RGB values from an image of color checker chart (device widely used in industries to solve the problem of color correction), segmenting color patches, and generating correction equations using regression models (Linear, Quadratic, and Cubic).
+The project introduces a novel single-step calibration method designed to enhance the color measurement performance of cameras. Unlike conventional multi-step methods, this approach streamlines the calibration process into a single step, making it faster and more practical for real-world applications.
 The method generates and evaluates different calibration models (Linear, Quadratic, and Cubic) for RGB values, allowing flexibility in selecting the most suitable model based on accuracy. The method has been validated using different cameras with varying resolutions (2, 2, and 3 megapixels).
 
 ## Key Features
@@ -17,7 +15,7 @@ The method generates and evaluates different calibration models (Linear, Quadrat
 7. Visual output: Displays the calibration model fit and segmented patches for visual verification.  
 
 ## Purpose
-This code was developed as part of a research study to streamline the color calibration process for camera systems, ensuring accurate color measurement while reducing complexity and execution time. The method is suitable for diverse applications, including food imaging, industrial inspection, and scientific research.
+This code was developed as part of a research study to streamline the color calibration process for camera systems, ensuring accurate color measurement while reducing complexity and execution time. The method suits diverse applications, including food imaging, industrial inspection, and scientific research.
 
 ## How It Works
 ### 1. Image Processing
@@ -59,12 +57,17 @@ This code was developed as part of a research study to streamline the color cali
 - Prepare the color checker chart images for calibration.  
 
 ### 2. Run the Code
-- Specify the color checker chart image path, measured RGB values file (for saving and retrieving during further operations), and reference RGB values file in the script.  
+- Specify the color checker chart image path, measured RGB values file (for saving and retrieving during further operations), and reference RGB values file in the script.
+- While executing code in the Bash, the generated images need to be closed to maintain code flow. These images allow the user to verify whether the code is correctly extracting the     
+  colors from the patches. Once confirmed, the user should close the image. In Python, these images are generated in a single step and displayed in the console. There is no need to 
+  close the images manually.
 - Execute the script to extract RGB values and perform camera calibration.  
 - The corrected RGB values will be saved as an Excel file.  
 
 ### 3. Model Selection
-- The script automatically evaluates Linear, Quadratic, and Cubic models for each RGB channel.  
+- The script automatically evaluates Linear, Quadratic, and Cubic models for each RGB channel.
+- While executing the code in Bash, the generated graphs/ plots must be closed to maintain the code flow. These plots allow the user to verify whether the modeling is accurate. Once 
+  confirmed, the user should close the plots. 2. In Python, these plots are generated in a single step and displayed in the console. There is no need to close the plots manually 
 - The model with the highest R² and lowest RMSE is selected for correction.  
 
 ## Example
