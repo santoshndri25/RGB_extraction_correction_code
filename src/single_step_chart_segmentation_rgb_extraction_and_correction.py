@@ -211,10 +211,15 @@ def model_and_correct_data(measured_file_path, reference_file_path):
             print(f"\nCorrected RGB values saved to {corrected_output_file}")
         except Exception as e:
             print("\nError while saving corrected RGB values:", e)
+            
 # Execution
+# Specify the path of the image of the ColorChecker chart to be processed.
 image_path = r"data/input/test_image.jpg"
+# Define the path where the extracted (measured) RGB values will be saved in Excel format.
 output_measured_file = "data/output/test_measured_rgb_values.xlsx"
+# Specify the path of the Excel file containing the reference RGB values for the standard ColorChecker chart.
 reference_file_path = "data/input/test_reference_rgb_values.xlsx"
+
 # Run the functions
 extract_rgb_and_save(image_path, output_measured_file)
 print("\nDebug: Measured RGB Values (from file):")
