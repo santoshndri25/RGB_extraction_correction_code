@@ -24,8 +24,10 @@ This code was developed as part of a research study to streamline the color cali
 #### Prerequisites
 - Ensure you have Python installed.
 - Navigate to the code directory in Bash:
+
   $ cd ~/RGB_extraction_correction_code
 - Run the script:
+
   python src/single_step_chart_segmentation_rgb_extraction_and_correction.py
 
 ### 1. Image Processing
