@@ -19,9 +19,9 @@ This code was developed as part of a research study to streamline the color cali
 
 ## How It Works
 
-## Running the Code
+### Running the Code
 
-### Prerequisites
+#### Prerequisites
 - Ensure you have Python installed.
 - Navigate to the code directory in Bash:
   $ cd ~/RGB_extraction_correction_code
