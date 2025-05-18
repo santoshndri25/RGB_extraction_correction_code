@@ -6,7 +6,7 @@ The project introduces a novel single-step calibration method designed to enhanc
 The method generates and evaluates different calibration models (Linear, Quadratic, and Cubic) for RGB values, allowing flexibility in selecting the most suitable model based on accuracy. The method has been validated using different cameras with varying resolutions (2, 2, and 3 megapixels).
 
 ## Current Code Version
-- Version: **v0.1.0** (Initial release for image processing and RGB correction)
+- Version: **v0.1.0** 
   
 ## Key Features
 1. Segmentation of color patches for precise color measurement.  
